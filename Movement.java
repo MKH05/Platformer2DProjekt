@@ -15,7 +15,7 @@ public class Movement {
         this.topSpeed = topSpeed;
         this.gravity = gravity;
         p = pin;
-    } nigger
+    }
 
 
     public void applyForce(PVector force) {
