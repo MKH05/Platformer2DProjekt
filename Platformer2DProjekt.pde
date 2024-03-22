@@ -1,8 +1,17 @@
 void setup() {
-    size(512, 512);
-    Movement move = new Movement(20,20,this);
+    size(1280, 512);
+
+    Player player = new Player(width/2, height/2, this);
 }
 
 void draw() {
     background(220);
+}
+
+void keyPressed() {
+    player.KeyPress();
+}
+
+void keyReleased() {
+    
 }
