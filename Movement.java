@@ -5,8 +5,9 @@ public class Movement {
     private PVector position;
     private PVector velocity;
     private float topSpeed;
-    private PApplet p;
     private float gravity;
+    private boolean onGround;
+    private PApplet p;
 
     public Movement(float startX, float startY, float topSpeed, float gravity, PApplet pin) {
         position = new PVector(startX, startY);
@@ -30,9 +31,14 @@ public class Movement {
         applyForce(rightForce);
     }
 
-    public void update() {
-        PVector gravityForce = new PVector(0, gravity);
-        applyForce(gravityForce);
+    public void update(boolean onGround) {
+        if (onGround) {
+            System.out.println(velocity.x);
+        }
+        else {
+            PVector gravityForce = new PVector(0, gravity);
+            applyForce(gravityForce);
+        }
         position.add(velocity);
         velocity.limit(topSpeed);
     }
