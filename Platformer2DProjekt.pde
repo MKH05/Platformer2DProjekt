@@ -1,7 +1,10 @@
+
+Player player;
+
 void setup() {
     size(1280, 512);
 
-    Player player = new Player(width/2, height/2, this);
+    player = new Player(width/2, height/2, this);
 }
 
 void draw() {
