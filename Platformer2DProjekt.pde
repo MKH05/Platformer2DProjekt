@@ -15,8 +15,5 @@ void keyPressed() {
 }
 
 void keyReleased() {
-}
-
-void playerOnGround(boolean onGround) {
-    player.setOnGround(onGround);
+    
 }

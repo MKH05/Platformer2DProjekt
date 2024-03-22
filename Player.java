@@ -1,32 +1,34 @@
 import processing.core.PApplet;
+import processing.core.PVector;
 
 public class Player{
   private float x;
   private float y;
+  private float WorldPosY;
   private boolean onGround;
-  private PApplet p;
   private Movement move;
-
-  Movement move;
+  private PApplet p;
 
   public Player(float startX, float startY, PApplet pin) {
       x = startX;
       y = startY;
+      WorldPosY = startY + 50f;
       p = pin;
-      onGround = false;   
-  }
+      onGround = false;
 
-  move = new Movement(x, y, 5, 0.5, p);
+      move = new Movement(x, y,5f,0.5f, pin);
+  }
 
   public void keyPressed() {
       if (p.key == 'w' && onGround) {
-          jump();
+            p.println("KeyPressed: w");
+            jump();
       }
-      if (p.key == CODED) {
-          if (p.keyCode == LEFT) {
-              move.applyLeftForce(0.5);
-          } else if (p.keyCode == RIGHT) {
-              move.applyRightForce(0.5);
+      if (p.key == p.CODED) {
+          if (p.keyCode == p.LEFT) {
+              move.applyLeftForce(0.5f);
+          } else if (p.keyCode == p.RIGHT) {
+              move.applyRightForce(0.5f);
           }
       }
   }
@@ -35,13 +37,18 @@ public class Player{
       PVector jumpForce = new PVector(0, -12);
       move.applyForce(jumpForce);
       onGround = false;
+      p.println("HOP!");
   }
 
   public void update() {
-      move.update(onGround);
-  }
+      if(move.getPosition().y > WorldPosY){
+        onGround = false;
+        move.update(onGround);
+      } else if (move.getPosition().y < WorldPosY) {
+        onGround = true;
+        move.update(onGround);
+      }
 
-  public void setOnGround(boolean onGround) {
-      this.onGround = onGround;
+      p.ellipse(move.getPosition().x,move.getPosition().y,25f,25f);   
   }
 }
