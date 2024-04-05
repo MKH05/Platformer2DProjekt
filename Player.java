@@ -4,6 +4,10 @@ public class Player{
 
     private PApplet p;
     
+    PImage[] walk = new PImage[12];
+    PImage[] fall = new PImage[12];
+    PImage[] idle = new PImage[12];
+
     private PVector position        = new PVector(0, 0);
     private PVector velocity        = new PVector(0, 0);
     private PVector acceleration    = new PVector(0, 0);
@@ -56,11 +60,41 @@ public class Player{
         acceleration.mult(0);
     }
 
-    public boolean handlePlatformCollision(int x, int y, int w, int h){
-        boolean isCollided =  position.x > x && position.x < x+w && position.y > y && position.y < y+h;
-        this.groundPositionY = y+1;
-        this.onGround = isCollided;
-        return isCollided;
+    public boolean handlePlatformCollision(int[] platformInfo) {
+    int x = platformInfo[0];
+    int y = platformInfo[1];
+    int w = platformInfo[2];
+    int h = platformInfo[3];
+
+    boolean isCollided = position.x > x && position.x < x + w && position.y > y && position.y < y + h;
+    
+    if (isCollided) {
+        this.groundPositionY = y + 1;
+        this.onGround = true;
+    } else {
+        this.onGround = false;
+    }
+    
+    return isCollided;
+}
+
+
+    private void loadImage(String path){
+        
+    }
+
+    public void stateMachine(){
+        if(moveLeft == true && onGround == true){
+        p.println("left");
+
+        }else if(moveRight == true && onGround == true){   
+        p.println("right");
+        }else if(!onGround){  
+        p.println("Air");
+        }else if(onGround && !moveRight && !moveLeft){
+        p.println("idle");
+        }
+
     }
 
     public void keyPressed(){
@@ -76,5 +110,6 @@ public class Player{
         if(p.key == 'd'){   moveRight = false;}
         if(p.key == 'w'){   moveUp = false;}
     }
+
 
 }
