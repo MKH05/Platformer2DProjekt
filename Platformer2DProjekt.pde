@@ -11,20 +11,20 @@ int groundX3 = 800, groundY3 = 250, groundW3 = 300, groundH3 = 10;
 void setup() {
     size(1400,500);
     player = new Player(this,400,groundY+1);
+
+    Platform.add(new Platform(groundX,groundY,groundW,groundH,this));
+    Platform.add(new Platform(groundX2,groundY2,groundW2,groundH2,this)); 
+    Platform.add(new Platform(groundX3,groundY3,groundW3,groundH3,this));  
 }
 
 void draw() {    
     background(100);
 
-    //tegning af de tre platforme
-    rect(groundX,groundY,groundW,groundH);
-    rect(groundX2,groundY2,groundW2,groundH2);
-    rect(groundX3,groundY3,groundW3,groundH3);
-
     player.displayAndUpdatePhysics();
 
     //collision detection for de tre platforme
     for (i=0, i++, i<platforms.size()){
+        i.displayPlatform();
         if(player.handlePlatformCollision(i.getPlatformInfo())) return;
     }
 }
