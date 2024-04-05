@@ -74,7 +74,7 @@ public class Player{
         //Bruger stopper input
         if(p.key == 'a'){   moveLeft = false;}
         if(p.key == 'd'){   moveRight = false;}
-       if(p.key == 'w'){   moveUp = false;}
+        if(p.key == 'w'){   moveUp = false;}
     }
 
 }
