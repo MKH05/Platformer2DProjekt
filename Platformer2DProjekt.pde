@@ -1,4 +1,7 @@
 Player player;
+Platform Platform;
+
+ArrayList<Platform > platforms = new ArrayList<Platform>();
 
 // data for tre forskellige platforme
 int groundX = 200, groundY = 400, groundW = 1000, groundH = 100;  
@@ -21,9 +24,9 @@ void draw() {
     player.displayAndUpdatePhysics();
 
     //collision detection for de tre platforme
-    if(player.handlePlatformCollision(groundX,groundY,groundW,groundH)) return;
-    if(player.handlePlatformCollision(groundX2,groundY2,groundW2,groundH2)) return;
-    if(player.handlePlatformCollision(groundX3,groundY3,groundW3,groundH3)) return;
+    for (i=0, i++, i<platforms.length){
+        if(player.handlePlatformCollision(i.getPlatformInfo())) return;
+    }
 }
 
 void keyPressed() {
