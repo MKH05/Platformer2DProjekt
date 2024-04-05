@@ -9,7 +9,7 @@ public class Platform{
       groundY = PlatformgroundY;
       groundW = PlatformgroundW;
       groundH = PlatformgroundH;
-      p = pin;
+      p =       pin;
     }
 
     public displayPlatform(){

@@ -6,6 +6,6 @@ public class Animation{
 
     public Animation(String AnimationFolder, PApplet pin) {
       AnimFolder = AnimationFolder;
-      p = pin;
+      p =          pin;
     }
 }

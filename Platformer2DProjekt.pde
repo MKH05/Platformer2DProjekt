@@ -24,7 +24,7 @@ void draw() {
     player.displayAndUpdatePhysics();
 
     //collision detection for de tre platforme
-    for (i=0, i++, i<platforms.length){
+    for (i=0, i++, i<platforms.size()){
         if(player.handlePlatformCollision(i.getPlatformInfo())) return;
     }
 }
