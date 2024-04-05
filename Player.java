@@ -73,6 +73,12 @@ public class Player{
         this.onGround = true;
     } else {
         this.onGround = false;
+
+        boolean HitButtom = position.x > x && position.x < x + w && position.y-50 > y && position.y-50 < y + h;
+
+        if (HitButtom){
+            velocity.y = 0;
+        }
     }
     
     return isCollided;
