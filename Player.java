@@ -92,7 +92,6 @@ public class Player{
     public void stateMachine(){
         if(moveLeft == true && onGround == true){
         p.println("left");
-
         }else if(moveRight == true && onGround == true){   
         p.println("right");
         }else if(!onGround){  
@@ -105,8 +104,8 @@ public class Player{
 
     public void keyPressed(){
         //Bruger starter input
-        if(p.key == 'a'){   moveLeft = true; }
-        if(p.key == 'd'){   moveRight = true;}
+        if(p.key == 'a'){   moveLeft = true; moveRight = false; }
+        if(p.key == 'd'){   moveRight = true; moveLeft = false;}
         if(p.key == 'w'){   moveUp = true;}
     }
 
