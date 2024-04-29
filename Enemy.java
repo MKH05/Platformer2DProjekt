@@ -1,5 +1,5 @@
 import processing.core.*;
 
-public class Enemy{
+public class Enemy extends GameObject{
 
 }
