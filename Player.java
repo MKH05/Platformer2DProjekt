@@ -12,6 +12,9 @@ public class Player extends GameObject{
     private boolean onGround;
     private int     groundPositionY;
 
+    private a = new Animation(this,"Animations/Player/Walk/Run (32x32).png");
+    
+
 
     public Player(PApplet p, int x, int y){
         this.p          = p;
@@ -82,15 +85,18 @@ public class Player extends GameObject{
 
     public void stateMachine(){
         if(moveLeft == true && onGround == true){
-        p.println("left");
-        }else if(moveRight == true && onGround == true){   
-        p.println("right");
-        }else if(!onGround){  
-        p.println("Air");
-        }else if(onGround && !moveRight && !moveLeft){
-        p.println("idle");
-        }
+                a = new Animation(this, "Animations/Player/Walk/Run (32x32).png")
 
+        }else if(moveRight == true && onGround == true){   
+                a = new Animation(this, "Animations/Player/Walk/Run (32x32).png")
+
+        }else if(!onGround){  
+                c = new Animation(this, "Animations/Player/Fall/Fall (32x32).png")
+
+        }else if(onGround && !moveRight && !moveLeft){
+                b = new Animation(this, "Animations/Player/Idle/Idle (32x32).png")
+
+        }
     }
 
     public void keyPressed(){

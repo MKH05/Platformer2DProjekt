@@ -10,24 +10,25 @@ public class Animation{
     private int row, column; 
     private int xFrame = 0;
     private int yFrame = 0;
-    private int xRow;
+    private int xColumn;
 
     private int reverseFactor = 1;
 
-    public Animation(PApplet p, String filename){
+    public Animation(PApplet p, String filename, int col){
         p.imageMode(p.CENTER);
         spritesheet = p.loadImage(filename);
         wFrame = spritesheet.width/4;
         hFrame = spritesheet.height/2;
         this.p = p;
+        xColumn = col;
     }
 
     public void display(int posX, int posY){
         if(p.frameCount%10==0){
 
-            if(column<4) {column++;} else {column = 0; row++;}
-            if(row==2) {row=0;}
-            if(row==1 && column == 2) {row=0; column=0;}
+            if(column<xColumn) {column++;} //else {column = 0; row++;}
+            //if(row==2) {row=0;}
+            if(row==0 && column == xColumn) {row=0; column=0;}
 
             xFrame = (column)*wFrame-25;
             yFrame = (row)*hFrame;
@@ -46,4 +47,11 @@ public class Animation{
         reverseFactor = -reverseFactor;
     }
 
+    public void left(){
+    reverseFactor = 1;
+    }
+
+    public void right(){
+    reverseFactor = -1;
+    }
 }
