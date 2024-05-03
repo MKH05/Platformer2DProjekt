@@ -1,11 +1,7 @@
 import processing.core.*;
 
-public class Enemy{
+public class Enemy extends GameObject{
     private PApplet p;
-    
-    PImage[] walk = new PImage[12];
-    PImage[] fall = new PImage[12];
-    PImage[] idle = new PImage[12];
 
     private PVector position        = new PVector(0, 0);
     private PVector velocity        = new PVector(0, 0);
