@@ -1,9 +1,5 @@
 import processing.core.*;
 
-public class GameObject{
-    private PApplet p;
-    int posx;
-    int posy;
+public class GameObject {
 
-    // der skal stå updates functionerne og pos osv.
 }

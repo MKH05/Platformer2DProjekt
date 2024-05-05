@@ -4,22 +4,25 @@ public class Player extends GameObject{
 
     private PApplet p;
 
+    private Animation a,b,c;
+
     private PVector position        = new PVector(0, 0);
     private PVector velocity        = new PVector(0, 0);
     private PVector acceleration    = new PVector(0, 0);
 
     private boolean moveUp, moveLeft, moveRight;
     private boolean onGround;
-    private int     groundPositionY;
-
-    private a = new Animation(this,"Animations/Player/Walk/Run (32x32).png");
-    
-
+    private int     groundPositionY;  
+    private boolean lastDirectionLeft;
 
     public Player(PApplet p, int x, int y){
         this.p          = p;
         groundPositionY = y;
         position.set(x,y);
+
+        a = new Animation(p, "Animations/Player/Walk/Run (32x32).png", 12);
+        b = new Animation(p, "Animations/Player/Idle/Idle (32x32).png", 11);
+        c = new Animation(p, "Animations/Player/Fall/Fall (32x32).png", 1);
     }   
 
     public void displayAndUpdatePhysics(){
@@ -31,7 +34,6 @@ public class Player extends GameObject{
         //tegning af spilleren
         p.fill(255);
         p.textSize(20);
-        p.rect(position.x-25, position.y-50, 50, 50);
 
         //top og bund af spilleren - skal bruges til at se hvor spilleren rammer platformen fra top eller bund
         p.ellipse(position.x, position.y, 5, 5);
@@ -41,6 +43,8 @@ public class Player extends GameObject{
         p.text("UP: " + moveUp + "\n LEFT: " + moveLeft + "\n RIGHT: " + moveRight + "\n onGround: " + onGround, 10, 20);
         p.text("POSITION : " + (int)position.x + " : " + (int)position.y, 300, 20);
         p.text("GROUND POSITION : " + groundPositionY, 300, 40);
+
+        stateMachine();
     }
 
     private void updatePhysics(){
@@ -49,8 +53,14 @@ public class Player extends GameObject{
         if(!onGround){ acceleration.y = 0.5f;}        
 
         //Bruger input til at ændre accelerationen
-        if(onGround && moveLeft){   acceleration.x = -0.5f; }
-        if(onGround && moveRight){  acceleration.x = 0.5f;}
+        if(onGround && moveLeft){   
+            acceleration.x = -0.5f;
+            lastDirectionLeft = true;
+        }
+        if(onGround && moveRight){  
+            acceleration.x = 0.5f;
+            lastDirectionLeft = false;
+        }
         if(onGround && moveUp){     acceleration.y = -10f;}
 
         //Fysikken opdateres
@@ -60,42 +70,50 @@ public class Player extends GameObject{
     }
 
     public boolean handlePlatformCollision(int[] platformInfo) {
-    int x = platformInfo[0];
-    int y = platformInfo[1];
-    int w = platformInfo[2];
-    int h = platformInfo[3];
+        int x = platformInfo[0];
+        int y = platformInfo[1];
+        int w = platformInfo[2];
+        int h = platformInfo[3];
 
-    boolean isCollided = position.x > x && position.x < x + w && position.y > y && position.y < y + h;
-    
-    if (isCollided) {
-        this.groundPositionY = y + 1;
-        this.onGround = true;
-    } else {
-        this.onGround = false;
+        boolean isCollided = position.x > x && position.x < x + w && position.y > y && position.y < y + h;
+        
+        if (isCollided) {
+            this.groundPositionY = y + 1;
+            this.onGround = true;
+        } else {
+            this.onGround = false;
 
-        boolean HitButtom = position.x > x && position.x < x + w && position.y-50 > y && position.y-50 < y + h;
+            boolean HitButtom = position.x > x && position.x < x + w && position.y-50 > y && position.y-50 < y + h;
 
-        if (HitButtom){
-            velocity.y = 0;
+            if (HitButtom){
+                velocity.y = 0;
+            }
         }
+        
+        return isCollided;
     }
-    
-    return isCollided;
-}
 
     public void stateMachine(){
-        if(moveLeft == true && onGround == true){
-                a = new Animation(this, "Animations/Player/Walk/Run (32x32).png")
-
-        }else if(moveRight == true && onGround == true){   
-                a = new Animation(this, "Animations/Player/Walk/Run (32x32).png")
-
-        }else if(!onGround){  
-                c = new Animation(this, "Animations/Player/Fall/Fall (32x32).png")
-
-        }else if(onGround && !moveRight && !moveLeft){
-                b = new Animation(this, "Animations/Player/Idle/Idle (32x32).png")
-
+        if(moveLeft && onGround){
+             a.left();
+             a.display(position.x,position.y-30);   
+        } else if(moveRight && onGround){   
+            a.right();
+            a.display(position.x,position.y-30);  
+        } else if(!onGround){ 
+            if(lastDirectionLeft) {
+                c.left();
+            } else {
+                c.right();
+            }
+            c.display(position.x,position.y-30); 
+        } else if(onGround && !moveRight && !moveLeft){             
+            if(lastDirectionLeft) {
+                b.left();
+            } else {
+                b.right();
+            }
+            b.display(position.x,position.y-30); 
         }
     }
 
@@ -112,6 +130,4 @@ public class Player extends GameObject{
         if(p.key == 'd'){   moveRight = false;}
         if(p.key == 'w'){   moveUp = false;}
     }
-
-
 }

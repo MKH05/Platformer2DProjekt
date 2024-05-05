@@ -1,44 +1,53 @@
-Player player;
-Platform Platform;
+    Player player;
+    Enemy enemy;
 
-ArrayList<Platform> platforms = new ArrayList<Platform>();
+    Platform Platform;
 
-// data for tre forskellige platforme
-int groundX = 200, groundY = 400, groundW = 1000, groundH = 100;  
-int groundX2 = 200, groundY2 = 300, groundW2 = 300, groundH2 = 10;
-int groundX3 = 800, groundY3 = 250, groundW3 = 300, groundH3 = 10;
+    ArrayList<Platform> platforms = new ArrayList<Platform>();
 
-void setup() {
-    size(1400,500);
-    player = new Player(this,400,groundY+1);
+    // data for tre forskellige platforme
+    int groundX = 200, groundY = 400, groundW = 1000, groundH = 100;  
+    int groundX2 = 200, groundY2 = 300, groundW2 = 300, groundH2 = 10;
+    int groundX3 = 800, groundY3 = 250, groundW3 = 300, groundH3 = 10;
 
-    platforms.add(new Platform(groundX,groundY,groundW,groundH,this));
-    platforms.add(new Platform(groundX2,groundY2,groundW2,groundH2,this)); 
-    platforms.add(new Platform(groundX3,groundY3,groundW3,groundH3,this));  
-}
+    void setup() {
+        size(1400,500);
+        player = new Player(this,400,groundY+1);
+        enemy = new Enemy(this,500,groundY+1);
 
-void draw() {    
-    background(100);
+        platforms.add(new Platform(groundX,groundY,groundW,groundH,this));
+        platforms.add(new Platform(groundX2,groundY2,groundW2,groundH2,this)); 
+        platforms.add(new Platform(groundX3,groundY3,groundW3,groundH3,this));  
+    }
 
-    player.displayAndUpdatePhysics();
+    void draw() {    
+        background(100);
 
-    //collision detection for de tre platforme
-    for (int i=0; i<platforms.size(); i++){
-        Platform FoundPlatform = platforms.get(i);
-        FoundPlatform.displayPlatform();    
-    }  
+        player.displayAndUpdatePhysics();
+        enemy.displayAndUpdatePhysics();
 
-    for (int f=0; f<platforms.size(); f++){
-        Platform FoundPlatformInfo = platforms.get(f);
-        if(player.handlePlatformCollision(FoundPlatformInfo.getPlatformInfo())) return;
-    }  
-}
+        for (int i=0; i<platforms.size(); i++){
+            Platform FoundPlatform = platforms.get(i);
+            FoundPlatform.displayPlatform();    
+        }
 
-void keyPressed() {
-    player.keyPressed();
-}
+        for (int f=0; f<platforms.size(); f++) {
+            Platform foundPlatform = platforms.get(f);
+            if (player.handlePlatformCollision(foundPlatform.getPlatformInfo())) return;
+        }
 
-void keyReleased() {
-    player.keyReleased();
-}
+        for (int f=0; f<platforms.size(); f++) {
+            Platform foundPlatform = platforms.get(f);
+            if (enemy.handlePlatformCollision(foundPlatform.getPlatformInfo())) return;
+        }
+        
+    }
+
+    void keyPressed() {
+        player.keyPressed();
+    }
+
+    void keyReleased() {
+        player.keyReleased();
+    }
 
