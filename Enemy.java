@@ -5,13 +5,10 @@ public class Enemy extends GameObject {
 
     private Animation a,b,c;
 
-    private PVector position        = new PVector(0, 0);
     private PVector velocity        = new PVector(0, 0);
     private PVector acceleration    = new PVector(0, 0);
 
     private boolean moveUp, moveLeft, moveRight;
-    private boolean onGround;
-    private int     groundPositionY;
     private boolean lastDirectionLeft;
     
     private int lastAITime;
@@ -72,30 +69,11 @@ public class Enemy extends GameObject {
             executeAI();
             lastAITime = p.frameCount;
         }
-    }
-
-    public boolean handlePlatformCollision(int[] platformInfo) {
-        int x = platformInfo[0];
-        int y = platformInfo[1];
-        int w = platformInfo[2];
-        int h = platformInfo[3];
-
-        boolean isCollided = position.x > x && position.x < x + w && position.y > y && position.y < y + h;
-
-        if (isCollided) {
-            this.groundPositionY = y + 1;
-            this.onGround = true;
+        if (p.millis() % 5000 < aiInterval) {
+            moveUp = true;
         } else {
-            this.onGround = false;
-
-            boolean hitBottom = position.x > x && position.x < x + w && position.y - 50 > y && position.y - 50 < y + h;
-
-            if (hitBottom){
-                velocity.y = 0;
-            }
+            moveUp = false;
         }
-        
-        return isCollided;   
     }
 
     public void stateMachine(){

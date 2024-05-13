@@ -6,13 +6,10 @@ public class Player extends GameObject{
 
     private Animation a,b,c;
 
-    private PVector position        = new PVector(0, 0);
-    private PVector velocity        = new PVector(0, 0);
     private PVector acceleration    = new PVector(0, 0);
 
     private boolean moveUp, moveLeft, moveRight;
-    private boolean onGround;
-    private int     groundPositionY;  
+
     private boolean lastDirectionLeft;
 
     public Player(PApplet p, int x, int y){
@@ -69,31 +66,7 @@ public class Player extends GameObject{
         acceleration.mult(0);
     }
 
-    public boolean handlePlatformCollision(int[] platformInfo) {
-        int x = platformInfo[0];
-        int y = platformInfo[1];
-        int w = platformInfo[2];
-        int h = platformInfo[3];
-
-        boolean isCollided = position.x > x && position.x < x + w && position.y > y && position.y < y + h;
-        
-        if (isCollided) {
-            this.groundPositionY = y + 1;
-            this.onGround = true;
-        } else {
-            this.onGround = false;
-
-            boolean HitButtom = position.x > x && position.x < x + w && position.y-50 > y && position.y-50 < y + h;
-
-            if (HitButtom){
-                velocity.y = 0;
-            }
-        }
-        
-        return isCollided;
-    }
-
-    public void stateMachine(){
+    private void stateMachine(){
         if(moveLeft && onGround){
              a.left();
              a.display(position.x,position.y-30);   

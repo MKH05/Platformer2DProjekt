@@ -1,3 +1,4 @@
+    GameObject gameObject;
     Player player;
     Enemy enemy;
 
@@ -13,7 +14,7 @@
     void setup() {
         size(1400,500);
         player = new Player(this,400,groundY+1);
-        enemy = new Enemy(this,500,groundY+1);
+        enemy = new Enemy(this,800,groundY+1);
 
         platforms.add(new Platform(groundX,groundY,groundW,groundH,this));
         platforms.add(new Platform(groundX2,groundY2,groundW2,groundH2,this)); 
@@ -33,12 +34,12 @@
 
         for (int f=0; f<platforms.size(); f++) {
             Platform foundPlatform = platforms.get(f);
-            if (player.handlePlatformCollision(foundPlatform.getPlatformInfo())) return;
+            if (player.handlePlatformCollision(foundPlatform.getPlatformInfo())) break;
         }
 
         for (int f=0; f<platforms.size(); f++) {
             Platform foundPlatform = platforms.get(f);
-            if (enemy.handlePlatformCollision(foundPlatform.getPlatformInfo())) return;
+            if (enemy.handlePlatformCollision(foundPlatform.getPlatformInfo())) break;
         }
         
     }
